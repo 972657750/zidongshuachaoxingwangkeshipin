@@ -1,24 +1,19 @@
-from selenium import webdriver  # 导入库
+from selenium import webdriver  
 import time
 
-browser = webdriver.Chrome(executable_path=r"D:\python\chromedriver.exe")  # 双引号内添加浏览器驱动的地址
+browser = webdriver.Chrome(executable_path=r"...\chromedriver.exe")  # 双引号内添加浏览器驱动的地址
 
 url = "http://passport2.chaoxing.com/login?fid=183&refer=http://i.mooc.chaoxing.com" #这里改成自己学校的学习通登录地址
 browser.get(url)
 
-print('**************************')
-print('欢迎来到邓皓天帮你刷网课')
-print('**************************\n')
-
-
 def input_usename_and_password():
-    inp=input("请输入账号:")
-    inp_2=input("请输入密码:")
-    inp_3 = input("请输入验证码:")
+    inp_1="..."#这里输入账号
+    inp_2="..."#这里输入密码
+    inp_3 = input("请输入验证码:")#验证码的自动识别很麻烦，这里为了简化就直接手动输入了
     username = browser.find_element_by_id("unameId")
     password = browser.find_element_by_id("passwordId")
     verycode = browser.find_element_by_id("numcode")
-    username.send_keys(inp)
+    username.send_keys(inp_1)
     password.send_keys(inp_2)
     verycode.send_keys(inp_3)
     sbm = browser.find_element_by_class_name("zl_btn_right")
@@ -31,13 +26,11 @@ def level_1st():
     browser.switch_to.frame("frame_content")
     # 进入首页，开始选择课程
     time.sleep(1)
-    #引号内添加要刷的相应那门课程的xpath
-    c_click = browser.find_element_by_xpath("/html/body/div/div[2]/div[2]/ul/li[3]/div[2]/h3/a")
+    
+    c_click = browser.find_element_by_xpath("")#引号内添加要刷的相应那门课程的xpath
     c_click.click()
 
-    # li_click = browser.find_element_by_xpath("")
-    # browser.execute_script("window.scrollT0(0,3000)")
-    # browser.back()#向后退 前进是forward（）
+
     time.sleep(1)
     browser.switch_to.window(browser.window_handles[-1])
 
@@ -64,7 +57,7 @@ def into_vedio_window():
     time.sleep(2)
 
 
-# 播放课
+# 播放视频
 def play_vedio():
     time.sleep(1)
     browser.switch_to.frame("iframe")
@@ -75,8 +68,7 @@ def play_vedio():
     print("课程已经开始播放")
 
 
-# 判断是否有答题框，其实这个逻辑挺简单的，只不过我不知道怎么触发答题框，
-# 选择题的话依次选择ABCD直到对了就可以
+#答题部分不太会就跳过了
 def if_question():
     pass
 
@@ -97,7 +89,7 @@ def if_vedio_finished():
         pass
 
 
-# 判断有第二节课吗有就播放
+# 判断是否有第二节课，如果有就播放
 def if_have_2nd_class(vedio_stat_time, vedio_end_time):
     if vedio_stat_time == vedio_end_time:
         try:
